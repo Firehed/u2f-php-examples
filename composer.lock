@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "00407de9213ef0acbd5215f3a3738739",
-    "content-hash": "101559d7e86fd8c5fef87b3d2431a36d",
+    "hash": "f2c93595c58fdbff63307b879d0c71f0",
+    "content-hash": "fe3a346018b3746573ad16ac71f8d449",
     "packages": [
         {
             "name": "firehed/arctools",
@@ -183,8 +183,14 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "git@git.ericstern.com:u2f.git",
-                "reference": "97a84cc5d4ee0574eaa1c10e072e23dae4621c3a"
+                "url": "https://github.com/Firehed/u2f-php.git",
+                "reference": "9e9c11804bf3b8ea11b11a84adb3aad19c94d434"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Firehed/u2f-php/zipball/9e9c11804bf3b8ea11b11a84adb3aad19c94d434",
+                "reference": "9e9c11804bf3b8ea11b11a84adb3aad19c94d434",
+                "shasum": ""
             },
             "require-dev": {
                 "firehed/arctools": "^1",
@@ -193,14 +199,16 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Firehed\\U2F\\": [
-                        "src/",
-                        "tests/"
-                    ]
+                    "Firehed\\U2F\\": "src/"
                 },
                 "files": [
                     "src/functions.php"
                 ]
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Firehed\\U2F\\": "tests/"
+                }
             },
             "authors": [
                 {
@@ -208,7 +216,11 @@
                     "email": "eric@ericstern.com"
                 }
             ],
-            "time": "2016-03-21 21:00:58"
+            "support": {
+                "source": "https://github.com/Firehed/u2f-php/tree/master",
+                "issues": "https://github.com/Firehed/u2f-php/issues"
+            },
+            "time": "2016-03-21 23:42:49"
         }
     ],
     "packages-dev": [],

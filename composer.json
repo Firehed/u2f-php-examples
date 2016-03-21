@@ -6,7 +6,7 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "git@git.ericstern.com:u2f.git"
+            "url": "https://github.com/Firehed/u2f-php.git"
         }
     ],
     "minimum-stability":"dev",
