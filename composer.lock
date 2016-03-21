@@ -184,7 +184,7 @@
             "source": {
                 "type": "git",
                 "url": "git@git.ericstern.com:u2f.git",
-                "reference": "51e4d64583d17165b6f9715a93f9d99112988c64"
+                "reference": "97a84cc5d4ee0574eaa1c10e072e23dae4621c3a"
             },
             "require-dev": {
                 "firehed/arctools": "^1",
@@ -208,7 +208,7 @@
                     "email": "eric@ericstern.com"
                 }
             ],
-            "time": "2016-03-18 18:29:16"
+            "time": "2016-03-21 21:00:58"
         }
     ],
     "packages-dev": [],
