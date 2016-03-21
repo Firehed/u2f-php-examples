@@ -10,9 +10,14 @@ use Firehed\JWT\{
 use Firehed\Security\Secret;
 use Firehed\U2F\Server;
 
-// This is for session storage
+// This configures sessions to use JWTs instead of persisting any data on the
+// server. Your application's existing session handling should work fine. If
+// you use JWT session storage, you absolutely must change the Secret below or
+// the signed client-side data can be forged.
 $keyContainer = new KeyContainer();
-$keyContainer->addKey('20160303', Algorithm::HMAC_SHA_256(), new Secret('asdfklj209flwjaflksdnflk2ifnas'));
+$keyContainer->addKey('20160303',
+    Algorithm::HMAC_SHA_256(),
+    new Secret('asdfklj209flwjaflksdnflk2ifnas'));
 $sh = new SessionHandler($keyContainer);
 ini_set('session.use_cookies', 'false');
 session_set_cookie_params(
@@ -23,6 +28,7 @@ session_set_cookie_params(
     $httponly = true
 );
 session_set_save_handler($sh);
+
 session_start();
 
 // This will intentionally leak into the other files' scope; normally, you'd set this up in a dependency inversion container or config file
