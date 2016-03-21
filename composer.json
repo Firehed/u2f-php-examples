@@ -1,0 +1,14 @@
+{
+    "require": {
+        "firehed/jwt": "^2.0",
+        "firehed/u2f":"*"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@git.ericstern.com:u2f.git"
+        }
+    ],
+    "minimum-stability":"dev",
+    "prefer-stable": true
+}

@@ -1,0 +1,222 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "hash": "00407de9213ef0acbd5215f3a3738739",
+    "content-hash": "101559d7e86fd8c5fef87b3d2431a36d",
+    "packages": [
+        {
+            "name": "firehed/arctools",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Firehed/arctools.git",
+                "reference": "033cc82e777dd10a5416f544b37afb84877332ca"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Firehed/arctools/zipball/033cc82e777dd10a5416f544b37afb84877332ca",
+                "reference": "033cc82e777dd10a5416f544b37afb84877332ca",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Firehed\\Arctools\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Eric Stern",
+                    "email": "eric@ericstern.com"
+                }
+            ],
+            "description": "Easily integrate with Arcanist and libphutil",
+            "time": "2015-10-16 22:30:55"
+        },
+        {
+            "name": "firehed/common",
+            "version": "1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Firehed/common.git",
+                "reference": "23a95c6c1d9286d0a9434143641955aebe5b3a02"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Firehed/common/zipball/23a95c6c1d9286d0a9434143641955aebe5b3a02",
+                "reference": "23a95c6c1d9286d0a9434143641955aebe5b3a02",
+                "shasum": ""
+            },
+            "require-dev": {
+                "firehed/arctools": "1.*",
+                "phpunit/phpunit": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Firehed\\Common\\": [
+                        "src/",
+                        "tests/"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Eric Stern",
+                    "email": "eric@ericstern.com"
+                }
+            ],
+            "description": "Common PHP tools",
+            "time": "2015-09-04 19:47:04"
+        },
+        {
+            "name": "firehed/jwt",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Firehed/jwt.git",
+                "reference": "b6d7b2a9b9f6d436a23f49163ca6f280dac7d5e3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Firehed/jwt/zipball/b6d7b2a9b9f6d436a23f49163ca6f280dac7d5e3",
+                "reference": "b6d7b2a9b9f6d436a23f49163ca6f280dac7d5e3",
+                "shasum": ""
+            },
+            "require": {
+                "firehed/arctools": "*@dev",
+                "firehed/common": "*@dev",
+                "firehed/security": "^1.0",
+                "php": ">=7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Firehed\\JWT\\": [
+                        "src/",
+                        "tests/"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Eric Stern",
+                    "email": "eric@ericstern.com"
+                }
+            ],
+            "description": "JSON Web Token tools",
+            "time": "2016-03-11 01:49:12"
+        },
+        {
+            "name": "firehed/security",
+            "version": "1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Firehed/Security.git",
+                "reference": "ff8ef13d53301079c2d47164767c2a336ac88b81"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Firehed/Security/zipball/ff8ef13d53301079c2d47164767c2a336ac88b81",
+                "reference": "ff8ef13d53301079c2d47164767c2a336ac88b81",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7"
+            },
+            "require-dev": {
+                "firehed/arctools": "^1",
+                "phpunit/phpunit": "~5"
+            },
+            "suggest": {
+                "paragonie/constant_time_encoding": "Contains a secure base32-encoder, useful for generating QRCodes for TOTP registration"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Firehed\\Security\\": [
+                        "src/",
+                        "tests/"
+                    ]
+                },
+                "files": [
+                    "src/HOTP.php",
+                    "src/TOTP.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Eric Stern",
+                    "email": "eric@ericstern.com"
+                }
+            ],
+            "description": "Security tools for PHP",
+            "time": "2016-03-17 19:49:59"
+        },
+        {
+            "name": "firehed/u2f",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "git@git.ericstern.com:u2f.git",
+                "reference": "51e4d64583d17165b6f9715a93f9d99112988c64"
+            },
+            "require-dev": {
+                "firehed/arctools": "^1",
+                "phpunit/phpunit": "^5.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Firehed\\U2F\\": [
+                        "src/",
+                        "tests/"
+                    ]
+                },
+                "files": [
+                    "src/functions.php"
+                ]
+            },
+            "authors": [
+                {
+                    "name": "Eric Stern",
+                    "email": "eric@ericstern.com"
+                }
+            ],
+            "time": "2016-03-18 18:29:16"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "dev",
+    "stability-flags": [],
+    "prefer-stable": true,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}
