@@ -32,14 +32,16 @@ $server = (new Server())
 
 // This is a dumbed-down "load user by username" function
 function get_user_data(string $user): array {
-    $user = basename($user);
-    if (!file_exists("users/$user.dat")) {
+    $file = get_user_path($user);
+    if (!file_exists($file)) {
         return [];
     }
-    return unserialize(file_get_contents("users/$user.dat"));
+    return unserialize(file_get_contents($file));
 }
 // This is a dumbed-down "save user" function
 function write_user_data(string $user, $data) {
-    $user = basename($user);
-    file_put_contents("users/$user.dat", serialize($data));
+    file_put_contents(get_user_path($user), serialize($data));
+}
+function get_user_path(string $user): string {
+    return __DIR__.'/users/'.basename($user).'.dat';
 }
