@@ -33,7 +33,8 @@ session_start();
 
 // This will intentionally leak into the other files' scope; normally, you'd set this up in a dependency inversion container or config file
 $server = (new Server())
-    ->setTrustedCAs(glob(__DIR__.'/vendor/firehed/u2f/CAcerts/*.pem'))
+//    ->setTrustedCAs(glob(__DIR__.'/vendor/firehed/u2f/CAcerts/*.pem'))
+    ->disableCAVerification() // Don't verify CAs during demo
     ->setAppId('https://u2f.ericstern.com'); // This needs to be your site, and must be HTTPS
 
 // This is a dumbed-down "load user by username" function
