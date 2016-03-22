@@ -11,7 +11,7 @@ Since this demo is showing off authentication with the U2F protocol, you must ph
 
 ## What it shows
 
-The forms in [`index.html`](public/index.html) individually show what would happen during user registration and adding a token to a user's account. Each one is powered by an AJAX handler to shuffle data between the client and server (see [`new.js`](public/new.js))
+The forms in [`index.html`](public/index.html) individually show what would happen during user registration and adding a token to a user's account. Each one is powered by an AJAX handler to shuffle data between the client and server (see [`site.js`](public/site.js))
 
 Each of the PHP files in `public/` power one of those AJAX endpoints, so that you can see the general inputs and outputs of each page. 
 
