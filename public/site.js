@@ -1,3 +1,87 @@
+// Actual site logic that you're probably interested in
+
+function u2fRegister(ajaxResponse) {
+    setFieldText('reg_request_to_sign',
+                  JSON.stringify(ajaxResponse.request) + "\n" + JSON.stringify(ajaxResponse.signatures));
+    showPress();
+
+    // The u2f api takes an array of register requests so you can use multiple
+    // protocols; the backend only supports one version and as such only
+    // returns one request, so it's wrapped in an array here
+    u2f.register([ajaxResponse.request], ajaxResponse.signatures, u2fPostRegisterData);
+}
+
+function u2fPostRegisterData(sig) {
+    hidePress();
+    setFieldText('reg_signature', JSON.stringify(sig));
+    if (sig.errorCode) { showAuthError(sig.errorCode); return; }
+
+    // Send data from U2F token to server over AJAX
+    ajaxPost('/complete_registration.php',
+             {"signature_str": JSON.stringify(sig)},
+              displayResponse,
+              displayResponse);
+}
+
+function u2fSign(ajaxResponse) {
+    setFieldText('auth_request_to_sign', JSON.stringify(ajaxResponse));
+    showPress();
+
+    u2f.sign(ajaxResponse, u2fPostSignData);
+}
+
+function u2fPostSignData(sig) {
+    hidePress();
+    setFieldText('auth_signature', JSON.stringify(sig));
+    if (sig.errorCode) { showAuthError(sig.errorCode); return; }
+
+    // Do auth POST
+    ajaxPost('/complete_auth.php',
+             {"signature_str": JSON.stringify(sig)},
+             displayResponse,
+             displayResponse);
+}
+
+// Basic AJAX-on-button-press hooks
+
+document.getElementById('register').addEventListener("submit", function(e) {
+    e.preventDefault();
+    var username = document.getElementById("reg_username").value;
+    var password = document.getElementById("reg_password").value;
+    ajaxPost('/register_user.php',
+             {"username":username, "password":password},
+             displayResponse,
+             displayResponse);
+});
+
+document.getElementById('login').addEventListener("submit", function(e) {
+    e.preventDefault();
+    var username = document.getElementById("login_username").value;
+    var password = document.getElementById("login_password").value;
+    ajaxPost('/login_user.php',
+             {"username":username, "password":password},
+             displayResponse,
+             displayResponse);
+});
+
+document.getElementById('register_token').addEventListener("submit", function(e) {
+    e.preventDefault();
+    ajaxPost('/u2f_register_data.php',
+             {},
+             u2fRegister,
+             displayResponse);
+});
+
+document.getElementById('auth_form').addEventListener("submit", function(e) {
+    e.preventDefault();
+    ajaxPost('/u2f_auth_data.php',
+             {},
+             u2fSign,
+             displayResponse);
+});
+
+// Helper functions
+
 function urlencode(obj) {
   var str = [];
   for(var p in obj)
@@ -15,7 +99,6 @@ function ajaxPost(url, data, success, fail) {
             if (success) { success(response); }
         }
         else {
-            console.log(response, xhr.responseText);
             if (fail) { fail(response); }
         }
     }
@@ -29,10 +112,16 @@ function showPress() {
 function hidePress() {
     document.getElementById('press').style.display = 'none';
 }
-displayResponse = function(resp) {
+
+function setFieldText(field, text) {
+    document.getElementById(field).value = text;
+}
+
+function displayResponse(resp) {
     document.getElementById('ajax-response').innerHTML = JSON.stringify(resp);
-};
-showAuthError = function(code) {
+}
+
+function showAuthError(code) {
     // https://developers.yubico.com/U2F/Libraries/Client_error_codes.html
     switch (code) {
     case 1:
@@ -54,6 +143,8 @@ showAuthError = function(code) {
     alert(message);
 };
 
+// Manage the debug checkbox and fields
+
 document.getElementById('debug').addEventListener('change', function(e) {
     box = document.getElementById('debug');
     if (box.checked) {
@@ -63,50 +154,3 @@ document.getElementById('debug').addEventListener('change', function(e) {
     }
 });
 
-document.getElementById('register').addEventListener("submit", function(e) {
-    e.preventDefault();
-    var username = document.getElementById("reg_username").value;
-    var password = document.getElementById("reg_password").value;
-    ajaxPost('/register_user.php', {"username":username, "password":password}, displayResponse);
-});
-
-document.getElementById('login').addEventListener("submit", function(e) {
-    e.preventDefault();
-    var username = document.getElementById("login_username").value;
-    var password = document.getElementById("login_password").value;
-    ajaxPost('/login_user.php', {"username":username, "password":password}, displayResponse);
-});
-document.getElementById('register_token').addEventListener("submit", function(e) {
-    e.preventDefault();
-    ajaxPost('/u2f_register_data.php', {}, function(resp) {
-        document.getElementById('reg_request_to_sign').value = JSON.stringify(resp.request) + "\n" + JSON.stringify(resp.signatures);
-        showPress();
-        u2f.register([resp.request], resp.signatures, function(sig) {
-            hidePress();
-            if (sig.errorCode) { showAuthError(sig.errorCode); return; }
-            document.getElementById('reg_signature').value = JSON.stringify(sig);
-            // actually submit stuff now
-            ajaxPost('/complete_registration.php', {
-                "signature_str": JSON.stringify(sig)
-            }, displayResponse, displayResponse);
-        });
-    }, null);
-});
-
-document.getElementById('auth_form').addEventListener("submit", function(e) {
-    e.preventDefault();
-    ajaxPost('/u2f_auth_data.php', {}, function(resp) {
-        document.getElementById("auth_request_to_sign").value = JSON.stringify(resp);
-        showPress();
-        u2f.sign(resp, function(sig) {
-            hidePress();
-            if (sig.errorCode) { showAuthError(sig.errorCode); return; }
-            document.getElementById("auth_signature").value = JSON.stringify(sig);
-            // Do auth POST
-            ajaxPost('/complete_auth.php', {
-                "signature_str": JSON.stringify(sig)
-            }, displayResponse, displayResponse);
-        });
-    }, displayResponse);
-});
- 
