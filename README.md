@@ -28,13 +28,17 @@ In a real application, each of the php files would be some sort of standard cont
 
 ## Notes
 
-If you're trying to run the example locally, you must do three things:
+If you're trying to run the example locally, you must do a few things:
 
 1. `composer install`
 2. Configure HTTPS
 3. Set up a webserver to serve out of the `public/` directory
+4. Use Google Chrome
 
 Why HTTPS? [Because browsers will reject HTTP](https://fidoalliance.org/specs/fido-u2f-v1.0-nfc-bt-amendment-20150514/fido-appid-and-facets.html#appid-example-1). You need HTTPS in production for your authentication to be remotely meaningful anyway.
+
+Why Chrome? As if 2016-03-23, [only Chrome supports U2F](http://caniuse.com/#feat=u2f).
+There is a feature request [open for Firefox](https://bugzilla.mozilla.org/show_bug.cgi?id=1065729), with [progress underway](https://bugzilla.mozilla.org/show_bug.cgi?id=1065729#c181).
 
 This means you can't just use the built-in PHP webserver. Sorry.
 
