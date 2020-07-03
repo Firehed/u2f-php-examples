@@ -1,33 +1,35 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "hash": "f2c93595c58fdbff63307b879d0c71f0",
-    "content-hash": "fe3a346018b3746573ad16ac71f8d449",
+    "content-hash": "427f4942fcee749429f359026818871c",
     "packages": [
         {
-            "name": "firehed/arctools",
-            "version": "1.1.0",
+            "name": "firehed/cbor",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/Firehed/arctools.git",
-                "reference": "033cc82e777dd10a5416f544b37afb84877332ca"
+                "url": "https://github.com/Firehed/cbor-php.git",
+                "reference": "eef67b1b5fdf90a3688fc8d9d13afdaf342c4b80"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Firehed/arctools/zipball/033cc82e777dd10a5416f544b37afb84877332ca",
-                "reference": "033cc82e777dd10a5416f544b37afb84877332ca",
+                "url": "https://api.github.com/repos/Firehed/cbor-php/zipball/eef67b1b5fdf90a3688fc8d9d13afdaf342c4b80",
+                "reference": "eef67b1b5fdf90a3688fc8d9d13afdaf342c4b80",
                 "shasum": ""
             },
             "require-dev": {
-                "phpunit/phpunit": "~5.0"
+                "phpunit/phpunit": "^8.1"
+            },
+            "suggest": {
+                "ext-bcmath": "Enables parsing of very large values"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Firehed\\Arctools\\": "src/"
+                    "Firehed\\CBOR\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -40,26 +42,30 @@
                     "email": "eric@ericstern.com"
                 }
             ],
-            "description": "Easily integrate with Arcanist and libphutil",
-            "time": "2015-10-16 22:30:55"
+            "description": "CBOR decoder",
+            "homepage": "https://github.com/Firehed/CBOR",
+            "keywords": [
+                "cbor"
+            ],
+            "time": "2019-05-14T06:31:13+00:00"
         },
         {
             "name": "firehed/common",
-            "version": "1.0.3",
+            "version": "1.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Firehed/common.git",
-                "reference": "23a95c6c1d9286d0a9434143641955aebe5b3a02"
+                "reference": "f8232076d6c047bc77ed6912412ea50724630198"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Firehed/common/zipball/23a95c6c1d9286d0a9434143641955aebe5b3a02",
-                "reference": "23a95c6c1d9286d0a9434143641955aebe5b3a02",
+                "url": "https://api.github.com/repos/Firehed/common/zipball/f8232076d6c047bc77ed6912412ea50724630198",
+                "reference": "f8232076d6c047bc77ed6912412ea50724630198",
                 "shasum": ""
             },
             "require-dev": {
-                "firehed/arctools": "1.*",
-                "phpunit/phpunit": "*"
+                "paragonie/random_compat": "^2.0",
+                "phpunit/phpunit": "^6 || ^7"
             },
             "type": "library",
             "autoload": {
@@ -81,30 +87,33 @@
                 }
             ],
             "description": "Common PHP tools",
-            "time": "2015-09-04 19:47:04"
+            "time": "2018-05-03T17:32:26+00:00"
         },
         {
             "name": "firehed/jwt",
-            "version": "2.0.0",
+            "version": "2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Firehed/jwt.git",
-                "reference": "b6d7b2a9b9f6d436a23f49163ca6f280dac7d5e3"
+                "reference": "65f689b875916fc71487c9e11bc0be9c7b182d7a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Firehed/jwt/zipball/b6d7b2a9b9f6d436a23f49163ca6f280dac7d5e3",
-                "reference": "b6d7b2a9b9f6d436a23f49163ca6f280dac7d5e3",
+                "url": "https://api.github.com/repos/Firehed/jwt/zipball/65f689b875916fc71487c9e11bc0be9c7b182d7a",
+                "reference": "65f689b875916fc71487c9e11bc0be9c7b182d7a",
                 "shasum": ""
             },
             "require": {
-                "firehed/arctools": "*@dev",
-                "firehed/common": "*@dev",
+                "firehed/common": "^1.0",
                 "firehed/security": "^1.0",
                 "php": ">=7.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "*"
+                "phpstan/phpstan": "^0.11.2",
+                "phpstan/phpstan-phpunit": "^0.11.0",
+                "phpstan/phpstan-strict-rules": "^0.11.0",
+                "phpunit/phpunit": "^7.0.3",
+                "squizlabs/php_codesniffer": "^3.4"
             },
             "type": "library",
             "autoload": {
@@ -126,7 +135,7 @@
                 }
             ],
             "description": "JSON Web Token tools",
-            "time": "2016-03-11 01:49:12"
+            "time": "2020-03-22T18:07:32+00:00"
         },
         {
             "name": "firehed/security",
@@ -176,25 +185,33 @@
                 }
             ],
             "description": "Security tools for PHP",
-            "time": "2016-03-17 19:49:59"
+            "time": "2016-03-17T19:49:59+00:00"
         },
         {
             "name": "firehed/u2f",
-            "version": "dev-master",
+            "version": "dev-webauthn",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Firehed/u2f-php.git",
-                "reference": "9e9c11804bf3b8ea11b11a84adb3aad19c94d434"
+                "reference": "11938269597e158940ff6aea27e485455e55783f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Firehed/u2f-php/zipball/9e9c11804bf3b8ea11b11a84adb3aad19c94d434",
-                "reference": "9e9c11804bf3b8ea11b11a84adb3aad19c94d434",
+                "url": "https://api.github.com/repos/Firehed/u2f-php/zipball/11938269597e158940ff6aea27e485455e55783f",
+                "reference": "11938269597e158940ff6aea27e485455e55783f",
                 "shasum": ""
             },
+            "require": {
+                "firehed/cbor": "dev-master",
+                "php": ">=7.2"
+            },
             "require-dev": {
-                "firehed/arctools": "^1",
-                "phpunit/phpunit": "^5.2"
+                "php-coveralls/php-coveralls": "^2.0",
+                "phpstan/phpstan": "^0.11",
+                "phpstan/phpstan-phpunit": "^0.11.2",
+                "phpunit/phpunit": "^8.0",
+                "spatie/phpunit-watcher": "^1.8",
+                "squizlabs/php_codesniffer": "^3.2"
             },
             "type": "library",
             "autoload": {
@@ -205,28 +222,39 @@
                     "src/functions.php"
                 ]
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Firehed\\U2F\\": "tests/"
-                }
-            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
             "authors": [
                 {
                     "name": "Eric Stern",
                     "email": "eric@ericstern.com"
                 }
             ],
-            "support": {
-                "source": "https://github.com/Firehed/u2f-php/tree/master",
-                "issues": "https://github.com/Firehed/u2f-php/issues"
-            },
-            "time": "2016-03-21 23:42:49"
+            "description": "A library providing U2F authentication",
+            "homepage": "https://github.com/Firehed/u2f-php",
+            "keywords": [
+                "Authentication",
+                "MFA",
+                "auth",
+                "security",
+                "u2f",
+                "web authentication",
+                "webauthentication",
+                "webauthn",
+                "yubico",
+                "yubikey"
+            ],
+            "time": "2019-06-01T23:47:13+00:00"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "firehed/u2f": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": [],

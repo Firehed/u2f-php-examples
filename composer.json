@@ -1,14 +1,8 @@
 {
     "require": {
         "firehed/jwt": "^2.0",
-        "firehed/u2f":"*"
+        "firehed/u2f": "dev-webauthn"
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/Firehed/u2f-php.git"
-        }
-    ],
-    "minimum-stability":"dev",
+    "minimum-stability": "dev",
     "prefer-stable": true
 }
