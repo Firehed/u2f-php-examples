@@ -1,0 +1,86 @@
+<html>
+
+    <head>
+        <title>Add a auth token</title>
+    </head>
+    <body>
+        <script type="text/javascript">
+
+const userId = "some value from your application"
+
+const getCredential = async (userId) => {
+
+    const response = await fetch('/getRegistrationChallenge')
+    if (!response.ok) {
+        throw new Error('response error')
+    }
+    // endpoint returns a simple json-encoded string
+    const challenge = await response.json()
+
+    const options = {
+      rp: {
+        name: "Example Site",
+      },
+      user: {
+        id: Uint8Array.from(userId, c => c.charCodeAt(0)),
+        name: "user@example.com",
+        displayName: "User Name",
+      },
+      challenge: Uint8Array.from(challenge, c => c.charCodeAt(0)),
+      pubKeyCredParams: [{alg: -7, type: "public-key"}],
+      timeout: 10000, // 60 seconds
+      authenticatorSelection: {
+        authenticatorAttachment: "cross-platform",
+        userVerification: "preferred",
+      },
+      attestation: "direct"
+    }
+
+    console.debug(options)
+
+    // If the user completes registration, this value will hold the data to POST to your application
+    const credential = await navigator.credentials.create({
+      publicKey: options
+    })
+
+    console.debug(credential)
+
+    // Format the user's `credential` and POST it to your application:
+
+    const dataToSend = {
+      rawId: new Uint8Array(credential.rawId),
+      type: credential.type,
+      response: {
+        attestationObject: new Uint8Array(credential.response.attestationObject),
+        clientDataJSON: new Uint8Array(credential.response.clientDataJSON),
+      },
+    }
+
+    console.debug(dataToSend)
+
+    const request = new Request('/registerCredential', {
+        body: JSON.stringify(dataToSend),
+        headers: {
+        'Content-type': 'application/json',
+        },
+        method: 'POST',
+    })
+
+    const registerResponse = await fetch(request)
+    console.debug(registerResponse)
+
+}
+
+/*
+const cred = getCredential(userId, challenge)
+console.debug(cred)
+
+// Pseudocode:
+// POST will send JSON.stringify(dataToSend) with an application/json Content-type header
+const response = POST('/verifyRegisterChallenge.php', dataToSend)
+*/
+
+getCredential(userId)
+        </script>
+    </body>
+</html>

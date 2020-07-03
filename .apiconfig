@@ -1,0 +1,5 @@
+{
+    "namespace": "Firehed\\Webauthn\\Endpoints\\",
+    "source": "src/Endpoints",
+    "webroot": "public"
+}
