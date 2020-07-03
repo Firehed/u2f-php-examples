@@ -7,6 +7,7 @@ use Firehed\API\Interfaces\EndpointInterface;
 use Firehed\API\Traits;
 use Firehed\Input\Containers\SafeInput;
 use Firehed\InputObjects\Text;
+use Firehed\Webauthn\{User, UserStorage};
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
 
@@ -14,6 +15,14 @@ class Register implements EndpointInterface
 {
     use Traits\Request\Post;
     use Traits\ResponseBuilder;
+
+    private UserStorage $userStorage;
+
+    public function __construct(UserStorage $s)
+    {
+        $this->userStorage = $s;
+    }
+
 
     public function getUri(): string
     {
@@ -35,20 +44,17 @@ class Register implements EndpointInterface
 
     public function execute(SafeInput $input): ResponseInterface
     {
-        $file = sprintf('users/%s.json', $input['username']);
-        if (file_exists($file)) {
+        $user = $this->userStorage->get($input['username']);
+        if ($user) {
             return $this->jsonResponse('Already registered', 409);
         }
-        $hash = password_hash($input['password'], PASSWORD_DEFAULT);
-        // write to db
 
-        $data = [
-            'user' => $input['username'],
-            'hash' => $hash,
-        ];
+        $user = new User();
+        $user->setName($input['username']);
+        $user->setPassword($input['password']);
 
-        file_put_contents($file, json_encode($data));
-        
-        return $this->jsonResponse($data);
+        $this->userStorage->save($user);
+
+        return $this->jsonResponse($user);
     }
 }

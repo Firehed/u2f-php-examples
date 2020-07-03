@@ -3,6 +3,10 @@ declare(strict_types=1);
 
 return [
 
+    Firehed\Webauthn\UserStorage::class,
+
+    Firehed\Webauthn\Endpoints\Login::class,
+    Firehed\Webauthn\Endpoints\Register::class,
     Firehed\Webauthn\Endpoints\GetRegistrationChallenge::class,
     Firehed\Webauthn\Endpoints\RegisterCredential::class,
 

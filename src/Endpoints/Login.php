@@ -7,6 +7,7 @@ use Firehed\API\Interfaces\EndpointInterface;
 use Firehed\API\Traits;
 use Firehed\Input\Containers\SafeInput;
 use Firehed\InputObjects\Text;
+use Firehed\Webauthn\UserStorage;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
 
@@ -14,6 +15,13 @@ class Login implements EndpointInterface
 {
     use Traits\Request\Post;
     use Traits\ResponseBuilder;
+
+    private UserStorage $userStorage;
+
+    public function __construct(UserStorage $s)
+    {
+        $this->userStorage = $s;
+    }
 
     public function getUri(): string
     {
@@ -35,15 +43,9 @@ class Login implements EndpointInterface
 
     public function execute(SafeInput $input): ResponseInterface
     {
-        // Read from db
-        $file = sprintf('users/%s.json', $input['username']);
-        if (!file_exists($file)) {
-            return $this->jsonResponse('Bad login', 403);
-        }
-
-        $user = json_decode(file_get_contents($file), true, 512, JSON_THROW_ON_ERROR);
-
-        $isValidPassword = password_verify($input['password'], $user['hash']);
+        $user = $this->userStorage->get($input['username']);
+        error_log(print_r($user, true));
+        $isValidPassword = $user->isPasswordCorrect($input['password']);
 
         if (!$isValidPassword) {
             return $this->jsonResponse('Bad login', 403);
