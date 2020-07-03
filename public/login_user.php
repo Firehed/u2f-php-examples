@@ -14,7 +14,7 @@ else {
     $check = password_verify($password, $data['password']);
     if ($check) {
         $_SESSION['user'] = $username;
-	echo json_encode($_SESSION);
+        echo json_encode($_SESSION);
     } else {
         header('HTTP/1/1 403 Unauthorized');
         echo json_encode("wrong password");

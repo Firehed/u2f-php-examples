@@ -31,6 +31,8 @@ session_set_save_handler($sh);
 
 session_start();
 
+ob_start();
+
 // This will intentionally leak into the other files' scope; normally, you'd set this up in a dependency inversion container or config file
 $server = (new Server())
 //    ->setTrustedCAs(glob(__DIR__.'/vendor/firehed/u2f/CAcerts/*.pem'))
