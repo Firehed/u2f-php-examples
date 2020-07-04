@@ -1,8 +1,6 @@
 <html>
     <head>
-        <title>Basic U2F setup</title>
-        <!-- Loads the Google-provided hardware token API -->
-        <script src="/u2f-api.js"></script>
+        <title>WebAuthn Demo</title>
         <style type="text/css">
         label.debug {
             display: none;
@@ -13,6 +11,20 @@
         </style>
     </head>
     <body>
+        <ul>
+            <li>
+                <a href="/register.html">Register</a>
+            </li>
+            <li>
+                <a href="/login.html">Log In</a>
+            </li>
+            <li>
+                <a href="/add_token.html">Add Token</a>
+            </li>
+            <li>
+                <a href="/use_token.html">Use Token</a>
+            </li>
+        </ul>
 
         <!-- UI element to be displayed when a keypress is necessary -->
         <div id="press" style="display: none">Press your U2F key now</div>

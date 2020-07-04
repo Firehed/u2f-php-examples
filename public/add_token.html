@@ -71,6 +71,10 @@ const getCredential = async (userId) => {
 
 }
 
+function start() {
+    getCredential(userId)
+}
+
 /*
 const cred = getCredential(userId, challenge)
 console.debug(cred)
@@ -80,7 +84,8 @@ console.debug(cred)
 const response = POST('/verifyRegisterChallenge.php', dataToSend)
 */
 
-getCredential(userId)
         </script>
+
+        <button onclick="start()">Click to start</button>
     </body>
 </html>

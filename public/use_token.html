@@ -1,0 +1,85 @@
+<html>
+
+    <head>
+        <title>Add a auth token</title>
+    </head>
+    <body>
+        <script type="text/javascript">
+
+const fromBase64Web = s => atob(s.replace(/\-/g,'+').replace(/_/g,'/'))
+
+const userId = "some value from your application"
+
+const getCredential = async (userId) => {
+
+    const response = await fetch('/getLoginChallenge')
+    if (!response.ok) {
+        throw new Error('response error')
+    }
+    const {challenge, keyHandles} = await response.json()
+
+    console.debug(challenge, keyHandles);
+
+    const options = {
+      challenge: Uint8Array.from(challenge, c => c.charCodeAt(0)),
+      allowCredentials: keyHandles.map(kh => ({
+        id: Uint8Array.from(fromBase64Web(kh), c => c.charCodeAt(0)),
+        type: 'public-key',
+        // todo: this will need some adjusting
+        transports: ['usb', 'ble', 'nfc'],
+      })),
+      timeout: 10000,
+    }
+    // If the user authenticates, this value will hold the data to POST to your application
+    const assertion = await navigator.credentials.get({
+      publicKey: options
+    });
+
+    console.debug(assertion);
+
+    // Format the user's `assertion` and POST it to your application:
+
+    const dataToSend = {
+      rawId: new Uint8Array(assertion.rawId),
+      type: assertion.type,
+      response: {
+        authenticatorData: new Uint8Array(assertion.response.authenticatorData),
+        clientDataJSON: new Uint8Array(assertion.response.clientDataJSON),
+        signature: new Uint8Array(assertion.response.signature),
+      },
+    }
+
+    console.debug(dataToSend);
+
+    const request = new Request('/validateCredential', {
+        body: JSON.stringify(dataToSend),
+        headers: {
+        'Content-type': 'application/json',
+        },
+        method: 'POST',
+    })
+
+    const validateResponse = await fetch(request)
+    console.debug(validateResponse)
+
+}
+
+function start() {
+    getCredential(userId)
+}
+
+/*
+const cred = getCredential(userId, challenge)
+console.debug(cred)
+
+// Pseudocode:
+// POST will send JSON.stringify(dataToSend) with an application/json Content-type header
+const response = POST('/verifyRegisterChallenge.php', dataToSend)
+*/
+
+        </script>
+
+        <button onclick="start()">Click to start</button>
+    </body>
+</html>
+
