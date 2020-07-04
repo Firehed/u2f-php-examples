@@ -25,7 +25,7 @@ class UserStorage
     {
         return file_put_contents(
             $this->getFile($user->getName()),
-            json_encode($user),
+            json_encode($user, JSON_PRETTY_PRINT),
         ) !== false;
     }
 

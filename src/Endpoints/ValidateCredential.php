@@ -13,10 +13,10 @@ use Throwable;
 
 use Firehed\U2F\{
     Server,
-    WebAuthn\RegistrationResponse,
+    WebAuthn\LoginResponse,
 };
 
-class RegisterCredential implements EndpointInterface
+class ValidateCredential implements EndpointInterface
 {
     // use Input\NoOptional;
     // use Input\NoRequired;
@@ -34,7 +34,7 @@ class RegisterCredential implements EndpointInterface
 
     public function getUri(): string
     {
-        return '/registerCredential';
+        return '/validateCredential';
     }
 
     public function getRequiredInputs(): array
@@ -56,18 +56,20 @@ class RegisterCredential implements EndpointInterface
         $user = $this->userStorage->get($_SESSION['USER_NAME']);
         assert($user !== null);
         // doot doot
-        $response = RegistrationResponse::fromDecodedJson($input->asArray());
+        $response = LoginResponse::fromDecodedJson($input->asArray());
 
-        $regReq = $_SESSION['REGISTRATION_REQUEST'];
+        $signRequests = $_SESSION['SIGN_REQUESTS'];
 
-        $this->server->setRegisterRequest($regReq);
+        $this->server->setRegistrations($user->getRegistrations());
+        $this->server->setSignRequests($signRequests);
 
-        $registration = $this->server->register($response);
+        $registration = $this->server->authenticate($response);
 
-        $user->addRegistration($registration);
-        $user->addRegistration($registration);
+        $user->updateRegistration($registration);
         $this->userStorage->save($user);
 
-        return $this->textResponse('registered! hit back');
+        error_log(print_r($registration, true));
+
+        return $this->textResponse('all good?');
     }
 }

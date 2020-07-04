@@ -44,16 +44,14 @@ class Login implements EndpointInterface
     public function execute(SafeInput $input): ResponseInterface
     {
         $user = $this->userStorage->get($input['username']);
-        error_log(print_r($user, true));
+
         $isValidPassword = $user->isPasswordCorrect($input['password']);
 
         if (!$isValidPassword) {
             return $this->jsonResponse('Bad login', 403);
         }
 
-        // run/apply password_needs_rehash here
-
-        // todo setcookie/session
+        $_SESSION['USER_NAME'] = $user->getName();
 
         return $this->jsonResponse([
             'ok',

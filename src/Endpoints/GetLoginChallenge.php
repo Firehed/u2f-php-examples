@@ -5,23 +5,17 @@ namespace Firehed\Webauthn\Endpoints;
 
 use Firehed\API\Interfaces\EndpointInterface;
 use Firehed\API\Traits;
+use Firehed\U2F\{SignRequest, Server};
 use Firehed\Input\Containers\SafeInput;
-use Firehed\InputObjects\{Any, Text};
+use Firehed\InputObjects;
 use Firehed\Webauthn\UserStorage;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
 
-use Firehed\U2F\{
-    Server,
-    WebAuthn\RegistrationResponse,
-};
-
-class RegisterCredential implements EndpointInterface
+class GetLoginChallenge implements EndpointInterface
 {
-    // use Input\NoOptional;
-    // use Input\NoRequired;
+    use Traits\Request\Get;
     use Traits\ResponseBuilder;
-    use Traits\Request\Post;
 
     private Server $server;
     private UserStorage $userStorage;
@@ -34,16 +28,12 @@ class RegisterCredential implements EndpointInterface
 
     public function getUri(): string
     {
-        return '/registerCredential';
+        return '/getLoginChallenge';
     }
 
     public function getRequiredInputs(): array
     {
-        return [
-            'rawId' => new Any(),
-            'type' => new Text(),
-            'response' => new Any(),
-        ];
+        return [];
     }
 
     public function getOptionalInputs(): array
@@ -55,19 +45,18 @@ class RegisterCredential implements EndpointInterface
     {
         $user = $this->userStorage->get($_SESSION['USER_NAME']);
         assert($user !== null);
-        // doot doot
-        $response = RegistrationResponse::fromDecodedJson($input->asArray());
 
-        $regReq = $_SESSION['REGISTRATION_REQUEST'];
+        $registrations = $user->getRegistrations();
 
-        $this->server->setRegisterRequest($regReq);
+        $signRequests = $this->server->generateSignRequests($registrations);
+        $_SESSION['SIGN_REQUESTS'] = $signRequests;
 
-        $registration = $this->server->register($response);
-
-        $user->addRegistration($registration);
-        $user->addRegistration($registration);
-        $this->userStorage->save($user);
-
-        return $this->textResponse('registered! hit back');
+        // WebAuthn expects a single challenge for all key handles, and the Server generates the requests accordingly.
+        return $this->jsonResponse([
+            'challenge' => $signRequests[0]->getChallenge(),
+            'keyHandles' => array_map(function (SignRequest $sr) {
+                return $sr->getKeyHandleWeb();
+            }, $signRequests),
+        ]);
     }
 }

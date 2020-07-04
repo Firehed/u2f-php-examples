@@ -7,8 +7,10 @@ return [
 
     Firehed\Webauthn\Endpoints\Login::class,
     Firehed\Webauthn\Endpoints\Register::class,
+    Firehed\Webauthn\Endpoints\GetLoginChallenge::class,
     Firehed\Webauthn\Endpoints\GetRegistrationChallenge::class,
     Firehed\Webauthn\Endpoints\RegisterCredential::class,
+    Firehed\Webauthn\Endpoints\ValidateCredential::class,
 
     Firehed\U2F\Server::class => function () {
         $server = new Firehed\U2F\Server();
