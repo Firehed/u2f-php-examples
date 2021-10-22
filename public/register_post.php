@@ -23,4 +23,4 @@ $user->setPassword($_POST['password']);
 $storage->save($user);
 
 header('HTTP/1.1 200 OK');
-echo 'Registration succeeded. Go back to add a token.';
+echo 'Registration succeeded. Go back to log in';
