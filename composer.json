@@ -16,5 +16,11 @@
         "firehed/jwt": "^2.0",
         "firehed/u2f": "dev-webauthn",
         "monolog/monolog": "^2.1"
-    }
+    },
+    "repository": [
+        {
+            "type": "path",
+            "url": "../u2f-php"
+        }
+    ]
 }
