@@ -2,12 +2,11 @@
 
 declare(strict_types=1);
 
-require dirname(__DIR__) . '/bootstrap.php';
+$app = require dirname(__DIR__) . '/bootstrap.php';
+$storage = $app['storage'];
 
 assert(isset($_POST['username']));
 assert(isset($_POST['password']));
-
-$storage = new Firehed\Webauthn\UserStorage();
 
 $user = $storage->get($_POST['username']);
 if ($user) {

@@ -15,4 +15,5 @@ $server->setAppId('localhost');
 
 return [
     'server' => $server,
+    'storage' => new Firehed\Webauthn\UserStorage(),
 ];

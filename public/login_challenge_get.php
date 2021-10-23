@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 $app = require dirname(__DIR__) . '/bootstrap.php';
 $server = $app['server'];
+$storage = $app['storage'];
 
-$storage = new Firehed\Webauthn\UserStorage();
 $user = $storage->get($_SESSION['USER_NAME']);
 assert($user !== null);
 
