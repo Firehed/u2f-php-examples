@@ -10,12 +10,13 @@ const userId = "some value from your application"
 
 const getCredential = async (userId) => {
 
-    const response = await fetch('/getRegistrationChallenge')
+    const response = await fetch('/get_registration_challenge.php')
     if (!response.ok) {
         throw new Error('response error')
     }
     // endpoint returns a simple json-encoded string
     const challenge = await response.json()
+    console.debug('Challege', challenge)
 
     const options = {
       rp: {
@@ -36,14 +37,14 @@ const getCredential = async (userId) => {
       attestation: "direct"
     }
 
-    console.debug(options)
+    console.debug('options', options)
 
     // If the user completes registration, this value will hold the data to POST to your application
     const credential = await navigator.credentials.create({
       publicKey: options
     })
 
-    console.debug(credential)
+    console.debug('credential', credential)
 
     // Format the user's `credential` and POST it to your application:
 
@@ -56,9 +57,9 @@ const getCredential = async (userId) => {
       },
     }
 
-    console.debug(dataToSend)
+    console.debug('dataToSend', dataToSend)
 
-    const request = new Request('/registerCredential', {
+    const request = new Request('/register_credential_post.php', {
         body: JSON.stringify(dataToSend),
         headers: {
         'Content-type': 'application/json',
@@ -67,7 +68,10 @@ const getCredential = async (userId) => {
     })
 
     const registerResponse = await fetch(request)
-    console.debug(registerResponse)
+    console.debug('registerResponse', registerResponse)
+    if (registerResponse.ok) {
+        alert('token registered, go back to log in with it')
+    }
 
 }
 
