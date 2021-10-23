@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a605afc8fe6febca0f3a1f7453f26885",
+    "content-hash": "b61ec6a7866ab3eb68fd90b2dc5723ca",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -905,16 +905,10 @@
         {
             "name": "firehed/u2f",
             "version": "dev-webauthn",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Firehed/u2f-php.git",
-                "reference": "feeaf78cbfcd731556b8dc5712071379cc562a1f"
-            },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Firehed/u2f-php/zipball/feeaf78cbfcd731556b8dc5712071379cc562a1f",
-                "reference": "feeaf78cbfcd731556b8dc5712071379cc562a1f",
-                "shasum": ""
+                "type": "path",
+                "url": "../u2f-php",
+                "reference": "feeaf78cbfcd731556b8dc5712071379cc562a1f"
             },
             "require": {
                 "firehed/cbor": "^0.1",
@@ -937,7 +931,33 @@
                     "src/functions.php"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "Firehed\\U2F\\": "tests/"
+                }
+            },
+            "scripts": {
+                "test": [
+                    "@phpunit",
+                    "@phpstan",
+                    "@phpcs"
+                ],
+                "coverage": [
+                    "phpunit --coverage-html build; open build/index.html"
+                ],
+                "autofix": [
+                    "phpcbf src lib tests db"
+                ],
+                "phpunit": [
+                    "phpunit"
+                ],
+                "phpstan": [
+                    "phpstan analyse --no-progress"
+                ],
+                "phpcs": [
+                    "phpcs"
+                ]
+            },
             "license": [
                 "MIT"
             ],
@@ -950,9 +970,9 @@
             "description": "A library providing U2F authentication",
             "homepage": "https://github.com/Firehed/u2f-php",
             "keywords": [
-                "Authentication",
-                "MFA",
                 "auth",
+                "authentication",
+                "mfa",
                 "security",
                 "u2f",
                 "web authentication",
@@ -961,11 +981,9 @@
                 "yubico",
                 "yubikey"
             ],
-            "support": {
-                "issues": "https://github.com/Firehed/u2f-php/issues",
-                "source": "https://github.com/Firehed/u2f-php/tree/webauthn"
-            },
-            "time": "2021-10-22T23:12:33+00:00"
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "jeremeamia/superclosure",
@@ -2844,8 +2862,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "firehed/api": 20,
-        "firehed/u2f": 20
+        "firehed/api": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

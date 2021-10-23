@@ -14,10 +14,10 @@
         "firehed/container": "^0.1.1",
         "firehed/inputobjects": "^3.2",
         "firehed/jwt": "^2.0",
-        "firehed/u2f": "dev-webauthn",
+        "firehed/u2f": "*",
         "monolog/monolog": "^2.1"
     },
-    "repository": [
+    "repositories": [
         {
             "type": "path",
             "url": "../u2f-php"
