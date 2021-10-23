@@ -18,7 +18,8 @@ const getCredential = async (userId) => {
     }
     const {challenge, keyHandles} = await response.json()
 
-    console.debug(challenge, keyHandles);
+    console.debug('challenge', challenge)
+    console.debug('keyHandles', keyHandles);
 
     const options = {
       challenge: Uint8Array.from(challenge, c => c.charCodeAt(0)),
@@ -35,7 +36,7 @@ const getCredential = async (userId) => {
       publicKey: options
     });
 
-    console.debug(assertion);
+    console.debug('assertion', assertion);
 
     // Format the user's `assertion` and POST it to your application:
 
@@ -49,9 +50,9 @@ const getCredential = async (userId) => {
       },
     }
 
-    console.debug(dataToSend);
+    console.debug('dataToSend', dataToSend);
 
-    const request = new Request('/validateCredential', {
+    const request = new Request('/validate_credential_post.php', {
         body: JSON.stringify(dataToSend),
         headers: {
         'Content-type': 'application/json',
@@ -60,7 +61,10 @@ const getCredential = async (userId) => {
     })
 
     const validateResponse = await fetch(request)
-    console.debug(validateResponse)
+    console.debug('validateResponse', validateResponse)
+    if (validateResponse.ok) {
+        alert('token worked')
+    }
 
 }
 
