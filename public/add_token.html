@@ -10,7 +10,7 @@ const userId = "some value from your application"
 
 const getCredential = async (userId) => {
 
-    const response = await fetch('/get_registration_challenge.php')
+    const response = await fetch('/registration_challenge_get.php')
     if (!response.ok) {
         throw new Error('response error')
     }
