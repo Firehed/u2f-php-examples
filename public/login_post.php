@@ -24,6 +24,14 @@ if (!$isValidPassword) {
     return;
 }
 
+// In a normal login flow, this is where you'd check for a user having 2FA
+// enabled (e.g. checking for one or more registrations associated with the
+// user) and, if so, force them directly into the second factor flow shown in
+// use_token.html.
+//
+// You would, of course, also want to use a proper session auth storage
+// mechanism. This is intentionally basic to make it easy to follow.
+
 $_SESSION['USER_NAME'] = $user->getName();
 
 header('HTTP/1.1 200 OK');
