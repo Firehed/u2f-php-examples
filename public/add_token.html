@@ -10,7 +10,7 @@ const userId = "some value from your application"
 
 const getCredential = async (userId) => {
 
-    const response = await fetch('/registration_challenge_get.php')
+    const response = await fetch('/add_token_get.php')
     if (!response.ok) {
         throw new Error('response error')
     }
@@ -59,7 +59,7 @@ const getCredential = async (userId) => {
 
     console.debug('dataToSend', dataToSend)
 
-    const request = new Request('/register_credential_post.php', {
+    const request = new Request('/add_token_post.php', {
         body: JSON.stringify(dataToSend),
         headers: {
             'Content-type': 'application/json',
