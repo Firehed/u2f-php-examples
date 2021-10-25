@@ -10,7 +10,7 @@ const fromBase64Web = s => atob(s.replace(/\-/g,'+').replace(/_/g,'/'))
 
 const getCredential = async () => {
 
-    const response = await fetch('/login_challenge_get.php')
+    const response = await fetch('/verify_get.php')
     if (!response.ok) {
         throw new Error('response error')
     }
@@ -50,7 +50,7 @@ const getCredential = async () => {
 
     console.debug('dataToSend', dataToSend);
 
-    const request = new Request('/validate_credential_post.php', {
+    const request = new Request('/verify_post.php', {
         body: JSON.stringify(dataToSend),
         headers: {
         'Content-type': 'application/json',
