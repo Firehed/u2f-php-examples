@@ -62,7 +62,7 @@ const getCredential = async (userId) => {
     const request = new Request('/register_credential_post.php', {
         body: JSON.stringify(dataToSend),
         headers: {
-        'Content-type': 'application/json',
+            'Content-type': 'application/json',
         },
         method: 'POST',
     })

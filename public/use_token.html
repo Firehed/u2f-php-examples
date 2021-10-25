@@ -8,9 +8,7 @@
 
 const fromBase64Web = s => atob(s.replace(/\-/g,'+').replace(/_/g,'/'))
 
-const userId = "some value from your application"
-
-const getCredential = async (userId) => {
+const getCredential = async () => {
 
     const response = await fetch('/login_challenge_get.php')
     if (!response.ok) {
@@ -69,17 +67,8 @@ const getCredential = async (userId) => {
 }
 
 function start() {
-    getCredential(userId)
+    getCredential()
 }
-
-/*
-const cred = getCredential(userId, challenge)
-console.debug(cred)
-
-// Pseudocode:
-// POST will send JSON.stringify(dataToSend) with an application/json Content-type header
-const response = POST('/verifyRegisterChallenge.php', dataToSend)
-*/
 
         </script>
 

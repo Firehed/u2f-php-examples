@@ -22,7 +22,6 @@ $server->setRegisterRequest($regReq);
 $registration = $server->register($response);
 
 $user->addRegistration($registration);
-        // $user->addRegistration($registration);
 $storage->save($user);
 
 header('HTTP/1.1 200 OK');
