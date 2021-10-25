@@ -19,22 +19,22 @@ const getCredential = async (userId) => {
     console.debug('Challege', challenge)
 
     const options = {
-      rp: {
-        name: "Example Site",
-      },
-      user: {
-        id: Uint8Array.from(userId, c => c.charCodeAt(0)),
-        name: "user@example.com",
-        displayName: "User Name",
-      },
-      challenge: Uint8Array.from(challenge, c => c.charCodeAt(0)),
-      pubKeyCredParams: [{alg: -7, type: "public-key"}],
-      timeout: 10000, // 60 seconds
-      authenticatorSelection: {
-        authenticatorAttachment: "cross-platform",
-        userVerification: "preferred",
-      },
-      attestation: "direct"
+        rp: {
+            name: "Example Site",
+        },
+        user: {
+            id: Uint8Array.from(userId, c => c.charCodeAt(0)),
+            name: "user@example.com",
+            displayName: "User Name",
+        },
+        challenge: Uint8Array.from(challenge, c => c.charCodeAt(0)),
+        pubKeyCredParams: [{alg: -7, type: "public-key"}],
+        timeout: 10000, // ms
+        authenticatorSelection: {
+            authenticatorAttachment: "cross-platform",
+            userVerification: "preferred",
+        },
+        attestation: "direct"
     }
 
     console.debug('options', options)
@@ -49,12 +49,12 @@ const getCredential = async (userId) => {
     // Format the user's `credential` and POST it to your application:
 
     const dataToSend = {
-      rawId: new Uint8Array(credential.rawId),
-      type: credential.type,
-      response: {
-        attestationObject: new Uint8Array(credential.response.attestationObject),
-        clientDataJSON: new Uint8Array(credential.response.clientDataJSON),
-      },
+        rawId: new Uint8Array(credential.rawId),
+        type: credential.type,
+        response: {
+            attestationObject: new Uint8Array(credential.response.attestationObject),
+            clientDataJSON: new Uint8Array(credential.response.clientDataJSON),
+        },
     }
 
     console.debug('dataToSend', dataToSend)
@@ -78,16 +78,6 @@ const getCredential = async (userId) => {
 function start() {
     getCredential(userId)
 }
-
-/*
-const cred = getCredential(userId, challenge)
-console.debug(cred)
-
-// Pseudocode:
-// POST will send JSON.stringify(dataToSend) with an application/json Content-type header
-const response = POST('/verifyRegisterChallenge.php', dataToSend)
-*/
-
         </script>
 
         <button onclick="start()">Click to start</button>
