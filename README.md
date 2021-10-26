@@ -1,21 +1,24 @@
 # U2F-PHP Examples
 
-This is a simple demo application that goes along with [firehed/u2f](https://github.com/Firehed/u2f-php).
+This is a simple demo application that goes along with [firehed/u2f-php](https://github.com/Firehed/u2f-php).
 
 ## Live Demo
-[https://u2f.ericstern.com]()
+[https://u2f.ericstern.com](https://u2f.ericstern.com)
 
 ## Requirements
 
-Since this demo is showing off authentication with the U2F protocol, you must physically have a FIDO U2F Token.
+Since this demo is showing off authentication with the `fido-u2f` protocol of WebAuthn, you must physically have a FIDO U2F Token.
 You can get one [from Amazon](http://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=u2f) for as little as $6.
+If you have a YubiKey, that will work.
 
 ## What it shows
 
-The forms in [`index.html`](public/index.html) individually show what would happen during user registration and adding a token to a user's account.
-Each one is powered by an AJAX handler to shuffle data between the client and server (see [`site.js`](public/site.js))
+The pages linked from [`index.html`](public/index.html) individually show what would happen during user registration and adding a token to a user's account.
+You should step through them in order, preferably with your browser's web inspector open.
 
-Each of the PHP files in `public/` power one of those AJAX endpoints, so that you can see the general inputs and outputs of each page.
+The first two pages are a standard user registration flow, and are mechanically necessary for the demo but don't add much.
+`add_token.html` and the matching PHP files demonstrate generating a challenge to send to the user, verifying their signed response, and storing the registration.
+`verify.html` and the matching PHP files demonstrate generating challenges for the user's registered devices and verifying their signed response to update their session to two-factor level.
 
 It's a very 2004-era "upload with FTP and you're done" approach, so that you can focus on understanding the pairs of "generate request"/"process response" endpoints.
 
@@ -31,15 +34,7 @@ In a real application, each of the php files would be some sort of standard cont
 If you're trying to run the example locally, you must do a few things:
 
 1. `composer install`
-2. Configure HTTPS
-3. Set up a webserver to serve out of the `public/` directory
-4. Use Google Chrome
+2. `php -S 0.0.0.0:8000 -t public/`
+3. Visit `http://localhost:8080` in any browser that [supports WebAuthn](https://developer.mozilla.org/en-US/docs/Web/API/Web_Authentication_API#browser_compatibility)
 
-Why HTTPS? [Because browsers will reject HTTP](https://fidoalliance.org/specs/fido-u2f-v1.0-nfc-bt-amendment-20150514/fido-appid-and-facets.html#appid-example-1). You need HTTPS in production for your authentication to be remotely meaningful anyway.
-
-Why Chrome? As if 2016-03-23, [only Chrome supports U2F](http://caniuse.com/#feat=u2f).
-There is a feature request [open for Firefox](https://bugzilla.mozilla.org/show_bug.cgi?id=1065729), with [progress underway](https://bugzilla.mozilla.org/show_bug.cgi?id=1065729#c181).
-
-This means you can't just use the built-in PHP webserver. Sorry.
-
-To avoid having to screw around with setting it up locally in a development environment, just use the demo above and watch traffic in the browser's development tools.
+Note that the Web Authentition APIs *only* work in "secure contexts", which means that to run it anywhere other than `localhost`, you *must* use HTTPS.

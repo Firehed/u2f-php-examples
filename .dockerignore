@@ -1,0 +1,8 @@
+/Dockerfile
+/.dockerignore
+/.git/
+/.gitignore
+/.github/
+/users/
+/vendor/
+/docker-compose.yml
