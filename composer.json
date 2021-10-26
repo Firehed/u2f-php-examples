@@ -10,12 +10,6 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "firehed/u2f": "*"
-    },
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../u2f-php"
-        }
-    ]
+        "firehed/u2f": "dev-webauthn"
+    }
 }
