@@ -1,4 +1,4 @@
-FROM composer:1.10.8 as dependencies
+FROM composer:2 AS dependencies
 COPY composer.json composer.lock ./
 RUN composer install \
     --no-dev \
@@ -7,7 +7,7 @@ RUN composer install \
     --optimize-autoloader \
     --prefer-dist
 
-FROM php:7.4.7-cli-alpine as server
+FROM php:8.0-cli-alpine as server
 WORKDIR /var/www/html
 # Add any system dependencies here
 
@@ -20,5 +20,7 @@ COPY --chown=php-www:php-www-users . .
 
 # Run
 USER php-www
+# This value must be set to the domain name you're serving content from
+ENV HOSTNAME=localhost
 ENV PORT=8000
 CMD php -S 0.0.0.0:$PORT -t public/
