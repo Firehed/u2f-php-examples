@@ -3,7 +3,7 @@
 This is a simple demo application that goes along with [firehed/u2f](https://github.com/Firehed/u2f-php).
 
 ## Live Demo
-[https://u2f.ericstern.com]()
+[https://u2f.ericstern.com](https://u2f.ericstern.com)
 
 ## Requirements
 
