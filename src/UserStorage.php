@@ -23,6 +23,9 @@ class UserStorage
 
     public function save(User $user): bool
     {
+        if (!file_exists(self::STORAGE_PATH)) {
+            mkdir(self::STORAGE_PATH);
+        }
         return file_put_contents(
             $this->getFile($user->getName()),
             json_encode($user, JSON_PRETTY_PRINT),

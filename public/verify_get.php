@@ -12,6 +12,11 @@ assert($user !== null);
 $registrations = $user->getRegistrations();
 
 $signRequests = $server->generateSignRequests($registrations);
+if (count($signRequests) === 0) {
+    header('400 Bad Request');
+    echo 'No tokens have been registered yet.';
+    return;
+}
 
 $_SESSION['SIGN_REQUESTS'] = $signRequests;
 
