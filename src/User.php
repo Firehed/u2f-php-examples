@@ -74,7 +74,7 @@ class User implements JsonSerializable
     /** @return RegistrationInterface[] */
     public function getRegistrations(): array
     {
-        return array_map(function ($regData) {
+        return array_values(array_map(function ($regData) {
             $reg = new Registration();
             $reg->setCounter($regData['counter']);
             $reg->setKeyHandle(base64_decode($regData['key_handle']));
@@ -85,7 +85,7 @@ class User implements JsonSerializable
             );
 
             return $reg;
-        }, $this->registrations);
+        }, $this->registrations));
     }
 
     public static function fromJson(array $data): User
