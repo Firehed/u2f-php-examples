@@ -10,22 +10,21 @@ $user = $storage->get($_SESSION['USER_NAME']);
 assert($user !== null);
 
 $registrations = $user->getRegistrations();
-
-$signRequests = $server->generateSignRequests($registrations);
-if (count($signRequests) === 0) {
+if (count($registrations) === 0) {
     header('400 Bad Request');
     echo 'No tokens have been registered yet.';
     return;
 }
 
-$_SESSION['SIGN_REQUESTS'] = $signRequests;
+$challenge = $server->generateChallenge();
+$_SESSION['LOGIN_CHALLENGE'] = $challenge;
 
 // WebAuthn expects a single challenge for all key handles, and the Server generates the requests accordingly.
 $data = [
-    'challenge' => $signRequests[0]->getChallenge(),
-    'keyHandles' => array_map(function (Firehed\U2F\SignRequest $sr) {
-        return $sr->getKeyHandleWeb();
-    }, $signRequests),
+    'challenge' => $challenge,
+    'keyHandles' => array_map(function (Firehed\U2F\RegistrationInterface $reg) {
+        return $reg->getKeyHandleWeb();
+    }, $registrations),
 ];
 
 header('HTTP/1.1 200 OK');

@@ -16,12 +16,9 @@ $input = json_decode($rawJson, true);
 
 $response = Firehed\U2F\WebAuthn\LoginResponse::fromDecodedJson($input);
 
-$signRequests = $_SESSION['SIGN_REQUESTS'];
+$challenge = $_SESSION['LOGIN_CHALLENGE'];
 
-$server->setRegistrations($user->getRegistrations());
-$server->setSignRequests($signRequests);
-
-$registration = $server->authenticate($response);
+$registration = $server->validateLogin($challenge, $response, $user->getRegistrations());
 
 // This keeps the token counters, etc, up to date.
 $user->updateRegistration($registration);
