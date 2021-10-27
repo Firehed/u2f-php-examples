@@ -14,9 +14,8 @@ session_start();
 // the WebAuthn APIs (navigator.credentials) to fail.
 $hostname = getenv('HOSTNAME') ?: 'localhost';
 
-$server = new Firehed\U2F\Server();
+$server = new Firehed\U2F\Server($hostname);
 $server->disableCAVerification(); // Skip verification in demo
-$server->setAppId($hostname);
 
 return [
     'server' => $server,
