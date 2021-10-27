@@ -10,6 +10,6 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "firehed/u2f": "dev-webauthn"
+        "firehed/u2f": "^1.3"
     }
 }
