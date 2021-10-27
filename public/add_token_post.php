@@ -15,11 +15,9 @@ assert(is_string($rawJson));
 $input = json_decode($rawJson, true);
 
 $response = Firehed\U2F\WebAuthn\RegistrationResponse::fromDecodedJson($input);
-$regReq = $_SESSION['REGISTRATION_REQUEST'];
+$challenge = $_SESSION['REGISTRATION_CHALLENGE'];
 
-$server->setRegisterRequest($regReq);
-
-$registration = $server->register($response);
+$registration = $server->validateRegistration($challenge, $response);
 
 $user->addRegistration($registration);
 $storage->save($user);
