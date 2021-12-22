@@ -31,7 +31,7 @@ const getCredential = async (userId) => {
         pubKeyCredParams: [{alg: -7, type: "public-key"}],
         timeout: 10000, // ms
         authenticatorSelection: {
-            authenticatorAttachment: "cross-platform",
+            authenticatorAttachment: "platform",
             userVerification: "preferred",
         },
         attestation: "direct"
@@ -40,11 +40,16 @@ const getCredential = async (userId) => {
     console.debug('options', options)
 
     // If the user completes registration, this value will hold the data to POST to your application
+    //try {
     const credential = await navigator.credentials.create({
       publicKey: options
     })
+    //} catch (e) {
+    //    console.error(e)
+    //    return
+    //}
 
-    console.debug('credential', credential)
+    console.debug('credential', credential, JSON.stringify(credential))
 
     // Format the user's `credential` and POST it to your application:
 

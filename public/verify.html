@@ -19,15 +19,19 @@ const getCredential = async () => {
     console.debug('challenge', challenge)
     console.debug('keyHandles', keyHandles);
 
+    // 5.5
     const options = {
         challenge: Uint8Array.from(challenge, c => c.charCodeAt(0)),
         allowCredentials: keyHandles.map(kh => ({
             id: Uint8Array.from(fromBase64Web(kh), c => c.charCodeAt(0)),
             type: 'public-key',
             // todo: this will need some adjusting
-            transports: ['usb', 'ble', 'nfc'],
+            transports: ['usb', 'ble', 'nfc', 'internal'], // internal=touchid/faceid
         })),
         timeout: 10000,
+        // rpId
+        // userVerification = preferred (required, discouraged)
+        // extensions
     }
     // If the user authenticates, this value will hold the data to POST to your application
     const assertion = await navigator.credentials.get({
